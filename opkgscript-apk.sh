@@ -36,7 +36,7 @@ install_packages() {
         # Strip version information if present (e.g., 'package-name - version')
         clean_package=$(echo "$package" | awk '{print $1}')
         echo "Installing $clean_package..."
-        apk add "$clean_package"
+        apk add --no-cache "$clean_package"
     done < "$PACKAGE_LIST"
 }
 
