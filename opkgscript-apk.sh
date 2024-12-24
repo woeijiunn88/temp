@@ -21,12 +21,7 @@ PACKAGE_LIST=/etc/config/installed_packages.list
 save_packages() {
     echo "Saving list of installed packages to $PACKAGE_LIST..."
     apk info > "$PACKAGE_LIST"
-    if [ $? -eq 0 ]; then
-        echo "Package list saved successfully."
-    else
-        echo "Failed to save package list." >&2
-        exit 1
-    fi
+    echo "Package list saved successfully."
 }
 
 # Function to install missing packages from the saved list
@@ -38,12 +33,8 @@ install_packages() {
 
     echo "Installing packages from $PACKAGE_LIST..."
     while read -r package; do
-        if ! apk info | grep -q "^$package\$"; then
-            echo "Installing $package..."
-            apk add "$package"
-        else
-            echo "$package is already installed."
-        fi
+        echo "Installing $package..."
+        apk add "$package"
     done < "$PACKAGE_LIST"
 }
 
